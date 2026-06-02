@@ -1,0 +1,16 @@
+.body{
+    /* background-color: red; */
+    max-width: 1200px;
+margin: auto;
+}
+
+.error{
+      font-size: 1.3rem;
+    color: red;
+
+}
+
+.message{
+    font-size: 1.3rem;
+ color: rgb(1, 255, 1);
+}

@@ -1,0 +1,30 @@
+.body {
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  max-width: 800px;
+  padding: 1rem;
+  margin: auto;
+  background-color: #30363b;
+  
+}
+
+.body p{
+  font-size: 1.5rem;
+}
+
+
+.mainButton{
+  color: yellow;
+  border-color: yellow;
+}
+
+.mainButton:hover{
+ 
+    background-color: yellow;
+    cursor: pointer;
+    color: #30363b;
+}

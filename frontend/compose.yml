@@ -1,0 +1,13 @@
+services:
+  frontend:
+    # image: reg.cicd.tlow.ir/root/tlow-front:VERSION
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "81:80"
+    restart: always
+
+ 
+ 

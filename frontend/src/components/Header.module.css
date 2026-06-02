@@ -1,0 +1,42 @@
+.header{
+
+    /* background-color: #808080; */
+    /* align-items: center; */
+}
+.container{
+    display: flex;
+flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width:1200px ;
+    margin: auto;
+}
+
+ 
+
+.bottonContainer{
+    display: flex;
+flex-direction: row;
+/* background-color: red; */
+}
+
+.headerLink{
+    
+    display: block;
+      font-size: 1.5rem;
+ font-weight: 600;
+    padding:0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin:0.5rem  ;
+    margin-right: 1rem;
+    /* background-color: white; */
+    color: white;
+    font-weight: 400;
+}
+
+.headerLink:hover{
+
+    
+    cursor: pointer;
+    color: inherit;
+}

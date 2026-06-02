@@ -1,0 +1,75 @@
+
+services:
+  mlpostgresql:
+    image: postgres:14 
+    container_name: mlpostgresql
+    volumes:
+      - chat_postgres:/var/lib/postgresql/data
+    restart: always
+    env_file: .env
+    ports:
+      - "5433:5432"
+ 
+  backend:
+    container_name: backend
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - static_files_volume:/static
+    #  - ./media:/media
+     - .:/app
+
+    restart: always
+    ports:
+      - "8000:8000"
+   
+    env_file: .env   
+    depends_on:
+      - mlpostgresql
+ 
+ 
+  nginx:
+    restart: always
+    container_name: nginx
+    build: 
+      context: ./nginx/
+      dockerfile: Dockerfile
+    ports:
+      - "81:8080"
+    depends_on:
+      - backend
+    volumes:
+     - static_files_volume:/static
+  
+  redis:
+    container_name: redis
+    ports:
+        - 6379:6379
+    # environment:
+    #       - REDIS_PASSWORD=1234
+    #       - REDIS_PORT=6379
+    image: redis:6.0-alpine
+    volumes:
+    - redis_data:/root/redis
+
+ 
+volumes:
+  static_files_volume:
+    external: true
+  chat_postgres:
+    external: true
+  redis_data:
+    external: true
+
+
+ 
+
+    # "npm i axios cookie moment react-data-table-component react-js-pagination react-toastify --save"
+
+ 
+ 
+# networks:
+#   postgresnetwork:
+#     external: true
+ 

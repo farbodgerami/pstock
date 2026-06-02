@@ -1,0 +1,25 @@
+.container{
+    max-width: 1080px;
+    /* background-color: red; */
+    margin: auto;
+}
+.container input {
+    margin: 0;
+    border-radius: 4px;
+}
+
+.error{
+      font-size: 1.3rem;
+    color: red;
+
+}
+
+.message{
+    font-size: 1.3rem;
+ color: rgb(1, 255, 1);
+}
+.image{
+    max-width: 800px;
+    /* margin: auto; */
+    /* background-color: red; */
+}
