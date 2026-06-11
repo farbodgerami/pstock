@@ -53,9 +53,7 @@ services:
     container_name: redis
     ports:
         - 6379:6379
-    # environment:
-    #       - REDIS_PASSWORD=1234
-    #       - REDIS_PORT=6379
+ 
     image: redis:6.0-alpine
     volumes:
     - redis_data:/root/redis
@@ -71,12 +69,4 @@ volumes:
 
 
  
-
-    # "npm i axios cookie moment react-data-table-component react-js-pagination react-toastify --save"
-
- 
- 
-# networks:
-#   postgresnetwork:
-#     external: true
  

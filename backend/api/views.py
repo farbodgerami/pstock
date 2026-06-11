@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
-
+ 
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
@@ -36,7 +35,7 @@ class UserCrud(APIView):
             )
 
             serializer = UserSerializer(user, many=False)
-            # login(request, user)
+    
             return Response(serializer.data)
         except Exception as e:
             message = {"detail": "Username or Email adress already exists"}
@@ -54,7 +53,7 @@ class ProtectedView(APIView):
 class StockPrediction(APIView):
     def post(self, request):
         try:
-            # load ML Model
+           
             model = load_model("stock_prediction_model.keras")
             data = request.data
             ticker = data["ticker"]
@@ -109,7 +108,7 @@ class StockPrediction(APIView):
             data_testing = pd.DataFrame(df.Close[int(len(df) * 0.7) :])
             scaler = MinMaxScaler(feature_range=(0, 1))
 
-            # preparing test data
+           
             past_100_days = data_training.tail(100)
             final_df = pd.concat([past_100_days, data_testing], ignore_index=True)
             input_data = scaler.fit_transform(final_df)
@@ -122,12 +121,11 @@ class StockPrediction(APIView):
             x_test, y_test = np.array(x_test), np.array(y_test)
 
             y_predicted = model.predict(x_test)
-            # Revert the scaled prices to original price
+            
             y_predicted = scaler.inverse_transform(y_predicted.reshape(-1, 1)).flatten()
             y_test = scaler.inverse_transform(y_test.reshape(-1, 1)).flatten()
 
-            # plot the final prediction
-
+       
             ma200 = df.Close.rolling(200).mean()
             plt.switch_backend("AGG")
             plt.figure(figsize=(12, 6))
