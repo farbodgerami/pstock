@@ -19,6 +19,13 @@ services:
      - static_files_volume:/static
     #  - ./media:/media
      - .:/app
+    
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
     restart: always
     ports:
