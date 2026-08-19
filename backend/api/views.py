@@ -24,7 +24,30 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 
 class UserCrud(APIView):
+    """
+    API endpoint for creating a new user account.
+
+    Accepts a username, email address, and password from the request body,
+    securely hashes the password, creates a Django User instance, and
+    returns the serialized user data.
+
+    Returns:
+        Response: Serialized user data with HTTP 200 on successful creation,
+        or an error message with HTTP 400 if the username or email already
+        exists or user creation fails.
+    """
     def post(self, request):
+        """
+        Create a new user account.
+
+        Args:
+            request: Django REST Framework HTTP request containing
+                `username`, `email`, and `password` in the request body.
+
+        Returns:
+            Response: Serialized user information on success, or an error
+            response with HTTP 400 on failure.
+        """
         data = request.data
    
         try:
@@ -43,15 +66,69 @@ class UserCrud(APIView):
 
 
 class ProtectedView(APIView):
+    """
+    Protected API endpoint accessible only to authenticated users.
+
+    Uses the IsAuthenticated permission class to ensure that only users
+    with valid authentication credentials can access the endpoint.
+    """
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        """
+        Verify that the current user is authenticated.
+
+        Args:
+            request: Django REST Framework HTTP request from an authenticated
+                user.
+
+        Returns:
+            Response: A confirmation message indicating that the request
+            was permitted.
+        """
         response = {"status": "Request was permitted"}
         return Response(response)
 
 
 class StockPrediction(APIView):
+    """
+    API endpoint for stock price analysis and prediction.
+
+    Downloads approximately ten years of historical stock data using
+    yfinance, generates closing-price and moving-average plots, prepares
+    the data for a pre-trained Keras machine-learning model, and generates
+    predicted stock prices.
+
+    The endpoint calculates prediction performance using Mean Squared Error
+    (MSE), Root Mean Squared Error (RMSE), and R² score. Generated plots are
+    saved using the application's `save_plot` utility and their paths are
+    returned in the API response.
+
+    The request must contain a stock ticker symbol in the `ticker` field.
+
+    Returns:
+        Response: A JSON response containing the generated plot paths and
+        prediction metrics on success, or an HTTP 400/404 error response
+        when processing fails or no historical data is available.
+    """
+
     def post(self, request):
+        """
+        Generate stock-price predictions for the requested ticker.
+
+        Args:
+            request: Django REST Framework HTTP request containing a `ticker`
+                field with the stock symbol to analyze.
+
+        Returns:
+            Response: Contains the status, generated plot paths, MSE, RMSE,
+            and R² prediction metrics.
+
+        Raises:
+            Exception: Any unexpected error during model loading, data
+                retrieval, preprocessing, prediction, or plot generation
+                is caught and returned as an HTTP 400 response.
+        """
         try:
            
             model = load_model("stock_prediction_model.keras")

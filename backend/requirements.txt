@@ -30,3 +30,5 @@ yfinance
 keras
 
 tensorflow
+
+drf_yasg
